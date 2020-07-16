@@ -21,10 +21,13 @@
                       }
                     }
                   });
+        var conditions = smart.patient.api.fetchAll({
+          type: 'Condition',
+        })
 
-        $.when(pt, obv).fail(onError);
+        $.when(pt, obv, conditions).fail(onError);
 
-        $.when(pt, obv).done(function(patient, obv) {
+        $.when(pt, obv, conditions).done(function(patient, obv, conditions) {
           var byCodes = smart.byCodes(obv, 'code');
           var gender = patient.gender;
 
@@ -60,6 +63,8 @@
           p.hdl = getQuantityValueAndUnit(hdl[0]);
           p.ldl = getQuantityValueAndUnit(ldl[0]);
 
+          p.conditions = conditions.toString()
+
           ret.resolve(p);
         });
       } else {
@@ -83,6 +88,7 @@
       diastolicbp: {value: ''},
       ldl: {value: ''},
       hdl: {value: ''},
+      conditions: {value: ''},
     };
   }
 
@@ -126,6 +132,7 @@
     $('#diastolicbp').html(p.diastolicbp);
     $('#ldl').html(p.ldl);
     $('#hdl').html(p.hdl);
+    $('#conditions').html(p.conditions);
   };
 
 })(window);
