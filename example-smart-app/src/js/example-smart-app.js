@@ -63,6 +63,8 @@
           p.hdl = getQuantityValueAndUnit(hdl[0]);
           p.ldl = getQuantityValueAndUnit(ldl[0]);
 
+          console.log(conditions);
+          conditions.forEach(element => console.log(element));
           p.conditions = conditions.toString()
 
           ret.resolve(p);
