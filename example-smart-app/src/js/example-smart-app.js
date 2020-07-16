@@ -63,9 +63,11 @@
           p.hdl = getQuantityValueAndUnit(hdl[0]);
           p.ldl = getQuantityValueAndUnit(ldl[0]);
 
-          console.log(conditions);
-          conditions.forEach(element => console.log(element));
-          p.conditions = conditions.toString()
+          var conditionsString = "";
+          condition.forEach(element => {
+            conditionsString += element.code.text + ", Onset: " + element.onsetDateTime.toString() + ", Status: " + element.clinicalStatus + "\n";
+          });
+          p.conditions = conditionsString
 
           ret.resolve(p);
         });
@@ -134,6 +136,7 @@
     $('#diastolicbp').html(p.diastolicbp);
     $('#ldl').html(p.ldl);
     $('#hdl').html(p.hdl);
+
     $('#conditions').html(p.conditions);
   };
 
