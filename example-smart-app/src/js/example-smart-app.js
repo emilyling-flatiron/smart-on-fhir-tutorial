@@ -64,7 +64,7 @@
           p.ldl = getQuantityValueAndUnit(ldl[0]);
 
           var conditionsString = "";
-          condition.forEach(element => {
+          conditions.forEach(element => {
             conditionsString += element.code.text + ", Onset: " + element.onsetDateTime.toString() + ", Status: " + element.clinicalStatus + "\n";
           });
           p.conditions = conditionsString
