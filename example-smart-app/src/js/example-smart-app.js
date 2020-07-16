@@ -11,19 +11,19 @@
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 
-        var {pt, obv, conditions, carePlan} = retrieveData(patient);
+        var {pt, obv, conditions, carePlan} = retrieveData(smart, patient);
 
         $.when(pt, obv, conditions, carePlan).fail(onError);
 
         $.when(pt, obv, conditions, carePlan).done(function(patient, obv, conditions, carePlan) {
-          processData(pt, obv, conditions, carePlan)
+          processData(smart, pt, obv, conditions, carePlan)
         });
       } else {
         onError();
       }
     }
-    
-    function retrieveData(patient) {
+
+    function retrieveData(smart, patient) {
       var pt = patient.read();
       var obv = smart.patient.api.fetchAll({
                   type: 'Observation',
@@ -44,7 +44,7 @@
       return {pt, obv, conditions, carePlan};
     }
 
-    function processData(pt, obv, conditions, carePlan) {
+    function processData(smart, pt, obv, conditions, carePlan) {
       var byCodes = smart.byCodes(obv, 'code');
       var gender = patient.gender;
 
