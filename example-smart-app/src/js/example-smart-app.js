@@ -16,7 +16,7 @@
         $.when(pt, obv, conditions, carePlan).fail(onError);
 
         $.when(pt, obv, conditions, carePlan).done(function(patient, obv, conditions, carePlan) {
-          processData(smart, pt, obv, conditions, carePlan)
+          processData(smart, patient, pt, obv, conditions, carePlan)
         });
       } else {
         onError();
@@ -44,7 +44,7 @@
       return {pt, obv, conditions, carePlan};
     }
 
-    function processData(smart, pt, obv, conditions, carePlan) {
+    function processData(smart, patient, pt, obv, conditions, carePlan) {
       var byCodes = smart.byCodes(obv, 'code');
       var gender = patient.gender;
 
