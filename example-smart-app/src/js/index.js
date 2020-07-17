@@ -1,7 +1,3 @@
-import * as React from "react";
-import { render } from "react-dom";
-import App from "./App";
-
 (function(window){
   window.extractData = function() {
     var ret = $.Deferred();
@@ -12,8 +8,6 @@ import App from "./App";
     }
 
     function onReady(smart)  {
-      const rootElement = document.getElementById("root");
-
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 
@@ -23,7 +17,7 @@ import App from "./App";
 
         $.when(pt, medications, conditions).done(
           function(patient, medications, conditions) {
-            render(<App patient={patient} meds={medications} conditions={conditions} />, rootElement);
+            window.appData = {patient, medications, conditions};
           }
         );
       } else {
