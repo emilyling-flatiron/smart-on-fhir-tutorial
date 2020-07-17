@@ -15,9 +15,11 @@
 
         $.when(pt, obv, conditions, carePlan, medications).fail(onError);
 
-        $.when(pt, obv, conditions, carePlan, medications).done(function(patient, obv, conditions, carePlan) {
-          processData(smart, patient, pt, obv, conditions, carePlan, medications)
-        });
+        $.when(pt, obv, conditions, carePlan, medications).done(
+          function(patient, obv, conditions, carePlan, medications) {
+            processData(smart, patient, pt, obv, conditions, carePlan, medications)
+          }
+        );
       } else {
         onError();
       }
