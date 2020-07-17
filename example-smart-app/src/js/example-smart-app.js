@@ -113,7 +113,7 @@
       var height = byCodes('8302-2');
       var location = patient.address[0].city + ", " + patient.address[0].state + " (zip code: " + patient.address[0].postalCode + ")"
     
-      var div = $('#patients');
+      var div = $('#patient');
       var table = $('<table class="table table-hover">');
       table.append('<tbody>');
       table.append('<tr><th>' + "First Name" + '</th><td>' + fname + '</td></tr>');
