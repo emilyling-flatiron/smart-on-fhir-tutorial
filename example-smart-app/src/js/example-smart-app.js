@@ -125,10 +125,12 @@
       var carePlanTable = $('<table>');
       carePlanTable.append('<tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th></tr>');
       carePlan.forEach(element => {
+        console.log(element);
         element.activity.forEach(activity => {
+          console.log(activity);
           var tr = $('<tr>');
-          tr.append('<th>' + element.detail.code.coding[0].display + '</th>');
-          tr.append('<td>' + element.detail.status + '</td>');
+          tr.append('<th>' + activity.detail.code.coding[0].display + '</th>');
+          tr.append('<td>' + activity.detail.status + '</td>');
           tr.append('<td>' + element.category[0].coding.display + '</td>');
           tr.append('<td>' + element.period.start + '</td>');
           carePlanTable.append(tr);
