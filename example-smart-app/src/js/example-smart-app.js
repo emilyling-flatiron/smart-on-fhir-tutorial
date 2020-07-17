@@ -25,7 +25,7 @@
       }
 	
       if (smart.hasOwnProperty('practitioner')) {
-        var practitioner = smart.practitioner;
+        var practitioner = smart.user;
 
         var {pr, contact} = retrievePractitionerData(smart, practitioner);
 
