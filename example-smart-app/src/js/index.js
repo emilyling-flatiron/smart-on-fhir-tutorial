@@ -8,6 +8,8 @@
     }
 
     function onReady(smart)  {
+      const rootElement = document.getElementById("root");
+
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 

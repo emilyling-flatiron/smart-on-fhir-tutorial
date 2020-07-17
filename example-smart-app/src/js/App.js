@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getPath } from "fhirclient/lib/lib";
 
 const rxnorm = "http://www.nlm.nih.gov/research/umls/rxnorm";
 
@@ -38,23 +37,6 @@ function PatientBanner(patient) {
     );
 }
 
-function MedRow({ med }) {
-    const name = getMedicationName(
-        getPath(med, "medicationCodeableConcept.coding") ||
-            getPath(med, "medicationReference.code.coding")
-    );
-    return (
-        <tr>
-            <td>
-                <b>{name}</b>
-            </td>
-            <td>{med.status || "-"}</td>
-            <td>{med.intent || "-"}</td>
-            <td>{getPath(med, "dosageInstruction.0.text") || "-"}</td>
-        </tr>
-    );
-}
-
 function ConditionRow({ condition }) {
     return (
         <tr>
@@ -67,26 +49,13 @@ function ConditionRow({ condition }) {
     );
 }
 
-function App({ patient, meds, conditions }) {
-    return (
+const e = React.createElement;
+function App() {
+    var {patient, medications, conditions} = window.appData;
+    return e(
         <div className="App">
             <PatientBanner {...patient} />
             <hr />
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Medication</th>
-                        <th>Status</th>
-                        <th>Intent</th>
-                        <th>Dosage Instruction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {meds.map(med => (
-                        <MedRow key={med.id} med={med} />
-                    ))}
-                </tbody>
-            </table>
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -106,4 +75,6 @@ function App({ patient, meds, conditions }) {
     );
 }
 
-export default App;
+
+const domContainer = document.querySelector('#root');
+ReactDOM.render(e(App), domContainer);
