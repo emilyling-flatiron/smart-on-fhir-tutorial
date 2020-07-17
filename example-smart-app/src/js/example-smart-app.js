@@ -27,7 +27,7 @@
      if (smart.hasOwnProperty('practitioner')) {
         var practitioner = smart.practitioner;
 
-        var {pr,contact } = retrievePractitionerData(smart, practitioner);
+        var {pr, contact} = retrievePractitionerData(smart, practitioner);
 
         $.when(pr, contact).fail(onError);
 
@@ -70,6 +70,8 @@
       
     function retrievePractitionerData(smart, practitioner) {
       var pr = practitioner.read();
+      console.log("pr");
+      console.log(pr);
      
       var contact= "dummy for now";
       return {pr, contact};
@@ -121,7 +123,7 @@
       p.height = getQuantityValueAndUnit(height[0]);
 
       console.log(patient);
-      
+
       if (typeof systolicbp != 'undefined')  {
         p.systolicbp = systolicbp;
       }
