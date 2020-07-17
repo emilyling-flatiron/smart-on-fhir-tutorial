@@ -11,20 +11,20 @@
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 
-        var {pt, obv, conditions, carePlan, medications, medicationAdministrations} = retrieveData(smart, patient);
+        var {pt, obv, conditions, carePlan, medications} = retrieveData(smart, patient);
 
-        $.when(pt, obv, conditions, carePlan, medications, medicationAdministrations).fail(onError);
+        $.when(pt, obv, conditions, carePlan, medications).fail(onError);
 
-        $.when(pt, obv, conditions, carePlan, medications, medicationAdministrations).done(
-          function(patient, obv, conditions, carePlan, medications, medicationAdministrations) {
-            processData(smart, patient, pt, obv, conditions, carePlan, medications, medicationAdministrations)
+        $.when(pt, obv, conditions, carePlan, medications).done(
+          function(patient, obv, conditions, carePlan, medications) {
+            processData(smart, patient, pt, obv, conditions, carePlan, medications)
           }
         );
       } else {
         onError();
       }
 	
-     if (smart.hasOwnProperty('practitioner')) {
+      if (smart.hasOwnProperty('practitioner')) {
         var practitioner = smart.practitioner;
 
         var {pr, contact} = retrievePractitionerData(smart, practitioner);
@@ -62,10 +62,7 @@
       var medications = smart.patient.api.fetchAll({
         type: 'Medication',
       })
-      var medicationAdministrations = smart.patient.api.fetchAll({
-        type: 'MedicationAdministration',
-      })
-      return {pt, obv, conditions, carePlan, medications, medicationAdministrations};
+      return {pt, obv, conditions, carePlan, medications};
     }
       
     function retrievePractitionerData(smart, practitioner) {
@@ -87,7 +84,6 @@
         lname = practitioner.name[0].family.join(' ');
       }
 
-     
       var p = defaultPractitioner();
       p.fname = fname;
       p.lname = lname;
@@ -95,9 +91,7 @@
       ret.resolve(p);
     }
 
-    function processData(smart, patient, pt, obv, conditions, carePlan, medications, medicationAdministrations) {
-      console.log(medicationAdministrations);
-      
+    function processData(smart, patient, pt, obv, conditions, carePlan, medications) {      
       var byCodes = smart.byCodes(obv, 'code');
       var gender = patient.gender;
 
@@ -121,6 +115,7 @@
       p.fname = fname;
       p.lname = lname;
       p.height = getQuantityValueAndUnit(height[0]);
+      p.location = patient.address[0].city + ", " + patient.address[0].state + " (zip code: " + patient.address[0].postalCode + ")"
 
       console.log(patient);
 
@@ -219,6 +214,7 @@
       diastolicbp: {value: ''},
       ldl: {value: ''},
       hdl: {value: ''},
+      location: {value: ''},
     };
   }
 
@@ -272,6 +268,7 @@
     $('#diastolicbp').html(p.diastolicbp);
     $('#ldl').html(p.ldl);
     $('#hdl').html(p.hdl);
+    $('#location').html(p.location);
   };
 
 })(window);
