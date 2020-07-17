@@ -90,13 +90,13 @@
     }
 
     function processData(smart, patient, pt, obv, conditions, carePlan, medications) {      
-      processPatient(smart, patient);
+      processPatient(smart, patient, obv);
       processConditions(conditions);
       processCarePlan(carePlan);
       processMedications(medications);
     }
 
-    function processPatient(smart, patient) {
+    function processPatient(smart, patient, obv) {
       console.log(patient);
 
       var byCodes = smart.byCodes(obv, 'code');
