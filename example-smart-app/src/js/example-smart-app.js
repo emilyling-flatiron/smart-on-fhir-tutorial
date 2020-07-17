@@ -1,4 +1,4 @@
-(function(window){
+(function(window) {
   window.extractData = function() {
     var ret = $.Deferred();
 
@@ -7,7 +7,7 @@
       ret.reject();
     }
 
-    function onReady(smart)  {
+    function onReady(smart) {
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 
@@ -139,7 +139,7 @@
       console.log(conditions);
 
       var conditionsDiv = $('#conditions');
-      var conditionsTable = $('<table className="table table-hover">');
+      var conditionsTable = $('<table class="table table-hover">');
       conditionsTable.append('<thead><tr><th>Condition</th><th>Code</th><th>Onset</th><th>Status</th></tr></thead>');
       conditionsTable.append('<tbody>');
       conditions.forEach(element => {
@@ -161,7 +161,7 @@
       console.log(carePlan);
 
       var carePlanDiv = $('#careplan');
-      var carePlanTable = $('<table className="table table-hover">');
+      var carePlanTable = $('<table class="table table-hover">');
       carePlanTable.append('<thead><tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr></thead>');
       carePlanTable.append('<tbody>');
       carePlan.forEach(element => {
@@ -187,7 +187,7 @@
     function processMedications(medications) {
       console.log(medications);
       var medicationsDiv = $('#medications');
-      var medicationsTable = $('<table className="table table-hover">');
+      var medicationsTable = $('<table class="table table-hover">');
       medicationsTable.append('<thead><tr><th>Medication</th><th>Last Updated</th></tr></thead>');
       medicationsTable.append('<tbody>');
       medications.forEach(element => {
