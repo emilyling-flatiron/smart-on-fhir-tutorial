@@ -60,15 +60,13 @@
         type: 'CarePlan',
       })
       var medications = smart.patient.api.fetchAll({
-        type: 'Medication',
+        type: 'MedicationRequest',
       })
       return {pt, obv, conditions, carePlan, medications};
     }
       
     function retrievePractitionerData(smart, practitioner) {
       var pr = practitioner.read();
-      console.log("pr");
-      console.log(pr);
      
       var contact= "dummy for now";
       return {pr, contact};
