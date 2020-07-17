@@ -141,16 +141,13 @@
       console.log(medications);
       var medicationsDiv = $('#medications');
       var medicationsTable = $('<table>');
-      medicationsTable.append('<tr><th>Medication</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr>');
-      // medications.forEach(element => {
-      //   var tr = $('<tr>');
-      //   tr.append('<th>' + element.code.coding[0] + '</th>');
-      //   tr.append('<td>' + activity.detail.status + '</td>');
-      //   tr.append('<td>' + element.category[0].coding[0].display + '</td>');
-      //   tr.append('<td>' + element.period.start + '</td>');
-      //   tr.append('<td>' + element.period.end + '</td>');
-      //   medicationsTable.append(tr);
-      // });
+      medicationsTable.append('<tr><th>Medication</th><th>Code</th></tr>');
+      medications.forEach(element => {
+        var tr = $('<tr>');
+        tr.append('<th>' + element.code.text + '</th>');
+        tr.append('<td>' + element.code.coding[0].code + '</td>');
+        medicationsTable.append(tr);
+      });
       if (medications.length > 0) {
         medicationsDiv.append('<h2>Medications</h2>')
         medicationsDiv.append(medicationsTable);
