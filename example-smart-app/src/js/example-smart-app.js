@@ -24,7 +24,7 @@
         onError();
       }
 	
-      if (smart.hasOwnProperty('practitioner')) {
+      if (smart.hasOwnProperty('user')) {
         var practitioner = smart.user;
 
         var {pr, contact} = retrievePractitionerData(smart, practitioner);
@@ -59,9 +59,10 @@
       var carePlan = smart.patient.api.fetchAll({
         type: 'CarePlan',
       })
-      var medications = smart.patient.api.fetchAll({
-        type: 'Medication',
-      })
+      // var medications = smart.patient.api.fetchAll({
+      //   type: 'Medication',
+      // })
+      var medications = smart.patient.request("Medication");
       return {pt, obv, conditions, carePlan, medications};
     }
       
