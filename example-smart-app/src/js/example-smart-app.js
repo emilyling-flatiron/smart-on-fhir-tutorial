@@ -141,11 +141,11 @@
       console.log(medications);
       var medicationsDiv = $('#medications');
       var medicationsTable = $('<table>');
-      medicationsTable.append('<tr><th>Medication</th><th>Code</th></tr>');
+      medicationsTable.append('<tr><th>Medication</th><th>Last Updated</th></tr>');
       medications.forEach(element => {
         var tr = $('<tr>');
         tr.append('<th>' + element.code.text + '</th>');
-        tr.append('<td>' + element.code.coding[0].code + '</td>');
+        tr.append('<td>' + element.meta.lastUpdated.toString() + '</td>');
         medicationsTable.append(tr);
       });
       if (medications.length > 0) {
