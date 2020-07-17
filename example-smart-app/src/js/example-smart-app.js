@@ -139,8 +139,9 @@
       console.log(conditions);
 
       var conditionsDiv = $('#conditions');
-      var conditionsTable = $('<table>');
-      conditionsTable.append('<tr><th>Condition</th><th>Code</th><th>Onset</th><th>Status</th></tr>');
+      var conditionsTable = $('<table className="table table-hover">');
+      conditionsTable.append('<thead><tr><th>Condition</th><th>Code</th><th>Onset</th><th>Status</th></tr></thead>');
+      conditionsTable.append('<tbody>');
       conditions.forEach(element => {
         var tr = $('<tr>');
         tr.append('<th>' + element.code.text + '</th>');
@@ -149,6 +150,7 @@
         tr.append('<td>' + element.clinicalStatus + '</td>');
         conditionsTable.append(tr);
       });
+      conditionsTable.append('</tbody>');
       if (conditions.length > 0) {
         conditionsDiv.append('<h2>Conditions</h2>')
         conditionsDiv.append(conditionsTable);
@@ -159,8 +161,9 @@
       console.log(carePlan);
 
       var carePlanDiv = $('#careplan');
-      var carePlanTable = $('<table>');
-      carePlanTable.append('<tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr>');
+      var carePlanTable = $('<table className="table table-hover">');
+      carePlanTable.append('<thead><tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr></thead>');
+      carePlanTable.append('<tbody>');
       carePlan.forEach(element => {
         console.log(element);
         element.activity.forEach(activity => {
@@ -174,6 +177,7 @@
           carePlanTable.append(tr);
         });
       });
+      carePlanTable.append('</tbody>');
       if (carePlan.length > 0) {
         carePlanDiv.append('<h2>Care Plan</h2>')
         carePlanDiv.append(carePlanTable);
@@ -183,14 +187,16 @@
     function processMedications(medications) {
       console.log(medications);
       var medicationsDiv = $('#medications');
-      var medicationsTable = $('<table>');
-      medicationsTable.append('<tr><th>Medication</th><th>Last Updated</th></tr>');
+      var medicationsTable = $('<table className="table table-hover">');
+      medicationsTable.append('<thead><tr><th>Medication</th><th>Last Updated</th></tr></thead>');
+      medicationsTable.append('<tbody>');
       medications.forEach(element => {
         var tr = $('<tr>');
         tr.append('<th>' + element.code.text + '</th>');
         tr.append('<td>' + element.meta.lastUpdated.toString() + '</td>');
         medicationsTable.append(tr);
       });
+      medicationsTable.append('</tbody>');
       if (medications.length > 0) {
         medicationsDiv.append('<h2>Medications</h2>')
         medicationsDiv.append(medicationsTable);
