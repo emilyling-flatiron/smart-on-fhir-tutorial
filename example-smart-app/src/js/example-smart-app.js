@@ -11,12 +11,12 @@
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
 
-        var {pt, obv, conditions, carePlan} = retrieveData(smart, patient);
+        var {pt, obv, conditions, carePlan, medications} = retrieveData(smart, patient);
 
-        $.when(pt, obv, conditions, carePlan).fail(onError);
+        $.when(pt, obv, conditions, carePlan, medications).fail(onError);
 
-        $.when(pt, obv, conditions, carePlan).done(function(patient, obv, conditions, carePlan) {
-          processData(smart, patient, pt, obv, conditions, carePlan)
+        $.when(pt, obv, conditions, carePlan, medications).done(function(patient, obv, conditions, carePlan) {
+          processData(smart, patient, pt, obv, conditions, carePlan, medications)
         });
       } else {
         onError();
@@ -41,10 +41,13 @@
       var carePlan = smart.patient.api.fetchAll({
         type: 'CarePlan',
       })
-      return {pt, obv, conditions, carePlan};
+      var medications = smart.patient.api.fetchAll({
+        type: 'medications',
+      })
+      return {pt, obv, conditions, carePlan, medications};
     }
 
-    function processData(smart, patient, pt, obv, conditions, carePlan) {
+    function processData(smart, patient, pt, obv, conditions, carePlan, medications) {
       var byCodes = smart.byCodes(obv, 'code');
       var gender = patient.gender;
 
@@ -82,18 +85,7 @@
 
       processConditions(conditions);
       processCarePlan(carePlan);
-      
-      
-      
-
-      // var carePlanTable = $('#careplan');
-      // carePlan.forEach(element => {
-      //   var tr = $('<tr>');
-      //   tr.append('<th>' + element.code.text + '</th>');
-      //   tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
-      //   tr.append('<td>' + element.clinicalStatus + '</td>');
-      //   carePlanTable.append(tr);
-      // });
+      processMedications(medications);
 
       ret.resolve(p);
     }
@@ -123,7 +115,7 @@
 
       var carePlanDiv = $('#careplan');
       var carePlanTable = $('<table>');
-      carePlanTable.append('<tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th></tr>');
+      carePlanTable.append('<tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr>');
       carePlan.forEach(element => {
         console.log(element);
         element.activity.forEach(activity => {
@@ -131,8 +123,9 @@
           var tr = $('<tr>');
           tr.append('<th>' + activity.detail.code.coding[0].display + '</th>');
           tr.append('<td>' + activity.detail.status + '</td>');
-          tr.append('<td>' + element.category[0].coding.display + '</td>');
+          tr.append('<td>' + element.category[0].coding[0].display + '</td>');
           tr.append('<td>' + element.period.start + '</td>');
+          tr.append('<td>' + element.period.end + '</td>');
           carePlanTable.append(tr);
         });
       });
@@ -140,6 +133,10 @@
         carePlanDiv.append('<h2>Care Plan</h2>')
         carePlanDiv.append(carePlanTable);
       }
+    }
+
+    function processCarePlan(medications) {
+      console.log(medications);
     }
 
     FHIR.oauth2.ready(onReady, onError);
