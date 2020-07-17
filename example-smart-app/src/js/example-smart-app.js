@@ -60,7 +60,7 @@
         type: 'CarePlan',
       })
       var medications = smart.patient.api.fetchAll({
-        type: 'MedicationRequest',
+        type: 'Medication',
       })
       return {pt, obv, conditions, carePlan, medications};
     }
