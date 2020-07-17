@@ -90,6 +90,15 @@
     }
 
     function processData(smart, patient, pt, obv, conditions, carePlan, medications) {      
+      processPatient(smart, patient);
+      processConditions(conditions);
+      processCarePlan(carePlan);
+      processMedications(medications);
+    }
+
+    function processPatient(smart, patient) {
+      console.log(patient);
+
       var byCodes = smart.byCodes(obv, 'code');
       var gender = patient.gender;
 
@@ -102,37 +111,21 @@
       }
 
       var height = byCodes('8302-2');
-      var systolicbp = getBloodPressureValue(byCodes('55284-4'),'8480-6');
-      var diastolicbp = getBloodPressureValue(byCodes('55284-4'),'8462-4');
-      var hdl = byCodes('2085-9');
-      var ldl = byCodes('2089-1');
+      var location = patient.address[0].city + ", " + patient.address[0].state + " (zip code: " + patient.address[0].postalCode + ")"
+    
+      var div = $('#patients');
+      var table = $('<table class="table table-hover">');
+      table.append('<tbody>');
+      table.append('<tr><th>' + "First Name" + '</th><td>' + fname + '</td></tr>');
+      table.append('<tr><th>' + "Last Name" + '</th><td>' + lname + '</td></tr>');
+      table.append('<tr><th>' + "Gender" + '</th><td>' + gender + '</td></tr>');
+      table.append('<tr><th>' + "Birth Date" + '</th><td>' + patient.birthDate + '</td></tr>');
+      table.append('<tr><th>' + "Location" + '</th><td>' + location + '</td></tr>');
+      table.append('<tr><th>' + "Height" + '</th><td>' + getQuantityValueAndUnit(height[0]) + '</td></tr>');
+      table.append('</tbody>');
 
-      var p = defaultPatient();
-      p.birthdate = patient.birthDate;
-      p.gender = gender;
-      p.fname = fname;
-      p.lname = lname;
-      p.height = getQuantityValueAndUnit(height[0]);
-      p.location = patient.address[0].city + ", " + patient.address[0].state + " (zip code: " + patient.address[0].postalCode + ")"
-
-      console.log(patient);
-
-      if (typeof systolicbp != 'undefined')  {
-        p.systolicbp = systolicbp;
-      }
-
-      if (typeof diastolicbp != 'undefined') {
-        p.diastolicbp = diastolicbp;
-      }
-
-      p.hdl = getQuantityValueAndUnit(hdl[0]);
-      p.ldl = getQuantityValueAndUnit(ldl[0]);
-
-      processConditions(conditions);
-      processCarePlan(carePlan);
-      processMedications(medications);
-
-      ret.resolve(p);
+      div.append('<h2>Patient Information</h2>')
+      div.append(table);
     }
 
     function processConditions(conditions) {
@@ -207,21 +200,6 @@
     return ret.promise();
   };
 
-  function defaultPatient(){
-    return {
-      fname: {value: ''},
-      lname: {value: ''},
-      gender: {value: ''},
-      birthdate: {value: ''},
-      height: {value: ''},
-      systolicbp: {value: ''},
-      diastolicbp: {value: ''},
-      ldl: {value: ''},
-      hdl: {value: ''},
-      location: {value: ''},
-    };
-  }
-
   function defaultPractitioner(){
     return {
       fname: {value: ''},
@@ -230,23 +208,6 @@
       contact:{value: ''}
 	
     };
-  }
-
-  function getBloodPressureValue(BPObservations, typeOfPressure) {
-    var formattedBPObservations = [];
-    BPObservations.forEach(function(observation){
-      var BP = observation.component.find(function(component){
-        return component.code.coding.find(function(coding) {
-          return coding.code == typeOfPressure;
-        });
-      });
-      if (BP) {
-        observation.valueQuantity = BP.valueQuantity;
-        formattedBPObservations.push(observation);
-      }
-    });
-
-    return getQuantityValueAndUnit(formattedBPObservations[0]);
   }
 
   function getQuantityValueAndUnit(ob) {
@@ -263,16 +224,6 @@
   window.drawVisualization = function(p) {
     $('#holder').show();
     $('#loading').hide();
-    $('#fname').html(p.fname);
-    $('#lname').html(p.lname);
-    $('#gender').html(p.gender);
-    $('#birthdate').html(p.birthdate);
-    $('#height').html(p.height);
-    $('#systolicbp').html(p.systolicbp);
-    $('#diastolicbp').html(p.diastolicbp);
-    $('#ldl').html(p.ldl);
-    $('#hdl').html(p.hdl);
-    $('#location').html(p.location);
   };
 
 })(window);
