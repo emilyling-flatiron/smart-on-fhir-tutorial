@@ -219,7 +219,7 @@ function processPractiitonerData(smart, practitioner, pr, contact) {
     };
   }
 
-    function defaultPractitioner(){
+  function defaultPractitioner(){
     return {
       fname: {value: ''},
       lname: {value: ''},
@@ -229,10 +229,7 @@ function processPractiitonerData(smart, practitioner, pr, contact) {
     };
   }
 
-    
-   
-
-  Function getBloodPressureValue(BPObservations, typeOfPressure) {
+  function getBloodPressureValue(BPObservations, typeOfPressure) {
     var formattedBPObservations = [];
     BPObservations.forEach(function(observation){
       var BP = observation.component.find(function(component){
