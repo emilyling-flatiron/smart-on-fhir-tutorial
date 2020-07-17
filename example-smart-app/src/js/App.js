@@ -1,5 +1,3 @@
-import * as React from "react";
-
 const rxnorm = "http://www.nlm.nih.gov/research/umls/rxnorm";
 
 function getMedicationName(medCodings = []) {

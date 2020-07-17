@@ -19,7 +19,6 @@
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
-    <div id='root'></div>
     <div id='holder' >
       <h2>Example-SMART-App</h2>
 
@@ -95,15 +94,10 @@
     -->
 
     <!-- Application-level javascript-->
-    <!-- <script src='./src/js/example-smart-app.js'></script> -->
-
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src='./src/js/example-smart-app.js'></script>
 
     <script src='./src/js/index.js'></script>
-    <script src='./src/js/App.js'></script>
+    <script type="module" src='./src/js/App.js'></script>
 
     <!-- FHIR Client JS Library -->
     <script src='./lib/js/fhir-client-v0.1.12.js'></script>
@@ -116,8 +110,7 @@
       extractData().then(
         //Display Patient Demographics and Observations if extractData was success
         function(p) {
-          console.log("here");
-          // drawVisualization(p);
+          drawVisualization(p);
         },
 
         //Display 'Failed to call FHIR Service' if extractData failed
