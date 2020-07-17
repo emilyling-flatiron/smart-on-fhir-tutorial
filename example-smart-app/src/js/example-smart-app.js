@@ -75,8 +75,7 @@
       return {pr, contact};
     }
 
-function processPractiitonerData(smart, practitioner, pr, contact) {
-   
+    function processPractitionerData(smart, practitioner, pr, contact) {
       contact = practitioner.telecom;
       var fname = '';
       var lname = '';
@@ -121,6 +120,8 @@ function processPractiitonerData(smart, practitioner, pr, contact) {
       p.lname = lname;
       p.height = getQuantityValueAndUnit(height[0]);
 
+      console.log(patient);
+      
       if (typeof systolicbp != 'undefined')  {
         p.systolicbp = systolicbp;
       }
