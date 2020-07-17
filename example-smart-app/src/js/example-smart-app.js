@@ -114,7 +114,7 @@
       var location = patient.address[0].city + ", " + patient.address[0].state + " (zip code: " + patient.address[0].postalCode + ")"
     
       var div = $('#patient');
-      var table = $('<table class="table table-hover">');
+      var table = $('<table class="table table-hover thead-dark">');
       table.append('<tbody>');
       table.append('<tr><th>' + "First Name" + '</th><td>' + fname + '</td></tr>');
       table.append('<tr><th>' + "Last Name" + '</th><td>' + lname + '</td></tr>');
@@ -132,7 +132,7 @@
       console.log(conditions);
 
       var conditionsDiv = $('#conditions');
-      var conditionsTable = $('<table class="table table-hover">');
+      var conditionsTable = $('<table class="table table-hover thead-dark">');
       conditionsTable.append('<thead><tr><th>Condition</th><th>Code</th><th>Onset</th><th>Status</th></tr></thead>');
       conditionsTable.append('<tbody>');
       conditions.forEach(element => {
@@ -154,7 +154,7 @@
       console.log(carePlan);
 
       var carePlanDiv = $('#careplan');
-      var carePlanTable = $('<table class="table table-hover">');
+      var carePlanTable = $('<table class="table table-hover thead-dark">');
       carePlanTable.append('<thead><tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th><th>End</th></tr></thead>');
       carePlanTable.append('<tbody>');
       carePlan.forEach(element => {
@@ -180,7 +180,7 @@
     function processMedications(medications) {
       console.log(medications);
       var medicationsDiv = $('#medications');
-      var medicationsTable = $('<table class="table table-hover">');
+      var medicationsTable = $('<table class="table table-hover thead-dark">');
       medicationsTable.append('<thead><tr><th>Medication</th><th>Last Updated</th></tr></thead>');
       medicationsTable.append('<tbody>');
       medications.forEach(element => {
