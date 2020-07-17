@@ -37,7 +37,7 @@
                 });
       var conditions = smart.patient.api.fetchAll({
         type: 'Condition',
-      })
+      })src/js/example-smart-app.js
       var carePlan = smart.patient.api.fetchAll({
         type: 'CarePlan',
       })
@@ -135,7 +135,7 @@
       }
     }
 
-    function processCarePlan(medications) {
+    function processMedications(medications) {
       console.log(medications);
     }
 
