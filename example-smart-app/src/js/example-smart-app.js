@@ -23,6 +23,22 @@
       } else {
         onError();
       }
+	
+     if (smart.hasOwnProperty('practitioner')) {
+        var practitioner = smart.practitioner;
+
+        var {pr,contact } = retrievePractitionerData(smart, practitioner);
+
+        $.when(pr, contact).fail(onError);
+
+        $.when(pr, contact).done(
+          function(practitioner, contact) {
+            processPractitionerData(smart, practitioner, pr, contact)
+          }
+        );
+      } else {
+        onError();
+      }
     }
 
     function retrieveData(smart, patient) {
@@ -50,6 +66,32 @@
         type: 'MedicationAdministration',
       })
       return {pt, obv, conditions, carePlan, medications, medicationAdministrations};
+    }
+      
+    function retrievePractitionerData(smart, practitioner) {
+      var pr = practitioner.read();
+     
+      var contact= "dummy for now";
+      return {pr, contact};
+    }
+
+function processPractiitonerData(smart, practitioner, pr, contact) {
+   
+      contact = practitioner.telecom;
+      var fname = '';
+      var lname = '';
+
+      if (typeof practitioner.name[0] !== 'undefined') {
+        fname = practitioner.name[0].given.join(' ');
+        lname = practitioner.name[0].family.join(' ');
+      }
+
+     
+      var p = defaultPractitioner();
+      p.fname = fname;
+      p.lname = lname;
+
+      ret.resolve(p);
     }
 
     function processData(smart, patient, pt, obv, conditions, carePlan, medications, medicationAdministrations) {
@@ -177,7 +219,20 @@
     };
   }
 
-  function getBloodPressureValue(BPObservations, typeOfPressure) {
+    function defaultPractitioner(){
+    return {
+      fname: {value: ''},
+      lname: {value: ''},
+      email: {value: ''},
+      contact:{value: ''}
+	
+    };
+  }
+
+    
+   
+
+  Function getBloodPressureValue(BPObservations, typeOfPressure) {
     var formattedBPObservations = [];
     BPObservations.forEach(function(observation){
       var BP = observation.component.find(function(component){
