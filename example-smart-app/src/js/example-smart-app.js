@@ -82,16 +82,25 @@
 
       console.log(conditions);
       console.log(carePlan);
+      
       var conditionsTable = $('#conditions');
       conditions.forEach(element => {
         var tr = $('<tr>');
         tr.append('<th>' + element.code.text + '</th>');
+        tr.append('<td>' + element.code.coding[0] .code + '</td>');
         tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
         tr.append('<td>' + element.clinicalStatus + '</td>');
         conditionsTable.append(tr);
       });
 
-      
+      // var carePlanTable = $('#careplan');
+      // carePlan.forEach(element => {
+      //   var tr = $('<tr>');
+      //   tr.append('<th>' + element.code.text + '</th>');
+      //   tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
+      //   tr.append('<td>' + element.clinicalStatus + '</td>');
+      //   carePlanTable.append(tr);
+      // });
 
       ret.resolve(p);
     }
@@ -111,7 +120,6 @@
       diastolicbp: {value: ''},
       ldl: {value: ''},
       hdl: {value: ''},
-      conditions: {value: ''},
     };
   }
 
@@ -155,8 +163,6 @@
     $('#diastolicbp').html(p.diastolicbp);
     $('#ldl').html(p.ldl);
     $('#hdl').html(p.hdl);
-
-    $('#conditions').html(p.conditions);
   };
 
 })(window);
