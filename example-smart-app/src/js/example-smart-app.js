@@ -80,11 +80,18 @@
       p.hdl = getQuantityValueAndUnit(hdl[0]);
       p.ldl = getQuantityValueAndUnit(ldl[0]);
 
-      var conditionsString = "";
+      console.log(conditions);
+      console.log(carePlan);
+      var conditionsTable = $('#conditions');
       conditions.forEach(element => {
-        conditionsString += element.code.text + ", Onset: " + element.onsetDateTime.toString() + ", Status: " + element.clinicalStatus + "\n";
+        var tr = $('<tr>');
+        tr.append('<th>' + element.code.text + '</th>');
+        tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
+        tr.append('<td>' + element.clinicalStatus + '</td>');
+        conditionsTable.append(tr);
       });
-      p.conditions = conditionsString
+
+      
 
       ret.resolve(p);
     }
