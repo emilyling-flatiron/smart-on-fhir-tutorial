@@ -80,18 +80,11 @@
       p.hdl = getQuantityValueAndUnit(hdl[0]);
       p.ldl = getQuantityValueAndUnit(ldl[0]);
 
-      console.log(conditions);
-      console.log(carePlan);
+      processConditions(conditions);
+      processCarePlan(carePlan);
       
-      var conditionsTable = $('#conditions');
-      conditions.forEach(element => {
-        var tr = $('<tr>');
-        tr.append('<th>' + element.code.text + '</th>');
-        tr.append('<td>' + element.code.coding[0] .code + '</td>');
-        tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
-        tr.append('<td>' + element.clinicalStatus + '</td>');
-        conditionsTable.append(tr);
-      });
+      
+      
 
       // var carePlanTable = $('#careplan');
       // carePlan.forEach(element => {
@@ -103,6 +96,48 @@
       // });
 
       ret.resolve(p);
+    }
+
+    function processConditions(conditions) {
+      console.log(conditions);
+
+      var conditionsDiv = $('#conditions');
+      var conditionsTable = $('<table>');
+      conditionsTable.append('<tr><th>Condition</th><th>Code</th><th>Onset</th><th>Status</th></tr>');
+      conditions.forEach(element => {
+        var tr = $('<tr>');
+        tr.append('<th>' + element.code.text + '</th>');
+        tr.append('<td>' + element.code.coding[0] .code + '</td>');
+        tr.append('<td>' + element.onsetDateTime.toString() + '</td>');
+        tr.append('<td>' + element.clinicalStatus + '</td>');
+        conditionsTable.append(tr);
+      });
+      if (conditions.length > 0) {
+        conditionsDiv.append('<h2>Conditions</h2>')
+        conditionsDiv.append(conditionsTable);
+      }
+    }
+
+    function processCarePlan(carePlan) {
+      console.log(carePlan);
+
+      var carePlanDiv = $('#careplan');
+      var carePlanTable = $('<table>');
+      carePlanTable.append('<tr><th>Activity</th><th>Status</th><th>Category</th><th>Start</th></tr>');
+      carePlan.forEach(element => {
+        element.activity.forEach(activity => {
+          var tr = $('<tr>');
+          tr.append('<th>' + element.detail.code.coding[0].display + '</th>');
+          tr.append('<td>' + element.detail.status + '</td>');
+          tr.append('<td>' + element.category[0].coding.display + '</td>');
+          tr.append('<td>' + element.period.start + '</td>');
+          carePlanTable.append(tr);
+        });
+      });
+      if (carePlan.length > 0) {
+        carePlanDiv.append('<h2>Care Plan</h2>')
+        carePlanDiv.append(carePlanTable);
+      }
     }
 
     FHIR.oauth2.ready(onReady, onError);
